@@ -4,29 +4,28 @@
 //
 //  Created by Christian Kurt Stoever on 6/26/25.
 //
+// MemCareApp.swift
 
 import SwiftUI
 import SwiftData
 
 @main
 struct MemCareApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
+    private let container: ModelContainer = {
+        try! ModelContainer(for: Task.self, Trial.self)
     }()
+
+    // NEW: track whether splash is still visible
+    @State private var showSplash = true
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if showSplash {
+                SplashScreen(isActive: $showSplash)
+            } else {
+                NavigationStack { RootTabView() }
+                    .modelContainer(container)
+            }
         }
-        .modelContainer(sharedModelContainer)
     }
 }

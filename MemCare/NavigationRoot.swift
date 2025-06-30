@@ -6,3 +6,11 @@
 //
 
 import Foundation
+import SwiftUI
+import SwiftData
+
+// NavigationRoot.swift
+enum Route: Hashable {
+    case tasks
+    case cognition
+}
