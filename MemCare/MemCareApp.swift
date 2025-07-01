@@ -12,7 +12,7 @@ import SwiftData
 @main
 struct MemCareApp: App {
     private let container: ModelContainer = {
-        try! ModelContainer(for: Task.self, Trial.self)
+        try! ModelContainer(for: Task.self, Trial.self, MemorySession.self, RecallTrial.self)
     }()
 
     // NEW: track whether splash is still visible
